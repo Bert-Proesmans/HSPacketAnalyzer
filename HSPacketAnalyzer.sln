@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28705.295
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HSPacketAnalyzer", "HSPacketAnalyzer\HSPacketAnalyzer.csproj", "{C1356249-51E5-4E1D-9080-2AB721401730}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BF1A4BE4-CFA4-46DE-98C2-F9C67D62EC20}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1356249-51E5-4E1D-9080-2AB721401730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1356249-51E5-4E1D-9080-2AB721401730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1356249-51E5-4E1D-9080-2AB721401730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1356249-51E5-4E1D-9080-2AB721401730}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {349EF4B9-947C-4924-A640-EA049DD003B9}
+	EndGlobalSection
+EndGlobal
