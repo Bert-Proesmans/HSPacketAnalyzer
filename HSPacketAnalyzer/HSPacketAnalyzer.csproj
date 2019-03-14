@@ -74,12 +74,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\GuidGenerator.cs" />
     <Compile Include="Properties\Toggles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Toggles.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PacketInspectorViewModel.cs" />
+    <Compile Include="ViewModels\PacketOverviewViewModel.cs" />
     <Compile Include="Views\Converters\DebugConverter.cs" />
     <Compile Include="Views\PacketInspectorWindow.xaml.cs">
       <DependentUpon>PacketInspectorWindow.xaml</DependentUpon>

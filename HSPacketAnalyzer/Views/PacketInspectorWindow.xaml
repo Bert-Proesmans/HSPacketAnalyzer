@@ -7,30 +7,25 @@
 		xmlns:converters="clr-namespace:HSPacketAnalyzer.Views.Converters"
         xmlns:viewmodels="clr-namespace:HSPacketAnalyzer.ViewModels"
         mc:Ignorable="d">
-    <Window.Resources>
-        <viewmodels:PacketInspectorViewModel x:Key="ViewModel"/>
+	<Window.Resources>
+		<viewmodels:PacketInspectorViewModel x:Key="ViewModel"/>
 		<converters:DebugConverter x:Key="DebugBinding"/>
 	</Window.Resources>
 
-    <Window.Title>
-        <Binding Source="{StaticResource ViewModel}" Path="Title"/>
-    </Window.Title>
-    <Window.Width>
-        <Binding Source="{StaticResource ViewModel}" Path="Width" />
-    </Window.Width>
-    <Window.Height>
-        <Binding Source="{StaticResource ViewModel}" Path="Height" />
-    </Window.Height>
+	<Window.Title>
+		<Binding Source="{StaticResource ViewModel}" Path="Title"/>
+	</Window.Title>
+	<Window.Width>
+		<Binding Source="{StaticResource ViewModel}" Path="Width" />
+	</Window.Width>
+	<Window.Height>
+		<Binding Source="{StaticResource ViewModel}" Path="Height" />
+	</Window.Height>
 
-    <!-- NOTE; Wrap the main content into a panel that's the last child of
+	<!-- NOTE; Wrap the main content into a panel that's the last child of
     the dockpanel. The last child will fill the parent window. -->
-    <DockPanel LastChildFill="True">
+	<DockPanel LastChildFill="True" DataContext="{StaticResource ViewModel}">
 		<Menu DockPanel.Dock="Top">
-			<Menu.ItemsPanel>
-				<ItemsPanelTemplate>
-					<DockPanel HorizontalAlignment="Stretch"/>
-				</ItemsPanelTemplate>
-			</Menu.ItemsPanel>
 			<MenuItem Header="In progress"/>
 		</Menu>
 
@@ -44,16 +39,46 @@
 				<TextBlock Text="In Progress"/>
 			</StatusBarItem>
 		</StatusBar>
-		
+
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="800"/>
+				<ColumnDefinition Width="600"/>
 				<!-- Splitter -->
 				<ColumnDefinition Width="5"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<DataGrid Grid.Column="0" Name="PacketListGrid"/>
+
+			<DataGrid Grid.Column="0" Name="PacketListGrid"
+					  ItemsSource="{Binding Path=PacketItems}"
+					  AutoGenerateColumns="False" CanUserSortColumns="True"
+					  SelectionMode="Extended" SelectionUnit="FullRow"
+					  CanUserReorderColumns="True" CanUserResizeColumns="True"
+					  CanUserAddRows="False" CanUserDeleteRows="False">
+				<DataGrid.ItemContainerStyle>
+					<Style TargetType="{x:Type DataGridRow}">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding ValidDecoded}" Value="False">
+								<Setter Property="Background" Value="OrangeRed"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</DataGrid.ItemContainerStyle>
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="#" IsReadOnly="True"
+										Width="SizeToCells" Binding="{Binding OrdinalIndex}"/>
+
+					<DataGridComboBoxColumn Header="Kind" IsReadOnly="False"
+											Width="SizeToCells" MinWidth="250"
+											SelectedValueBinding="{Binding TypeName}"/>
+
+					<DataGridTextColumn Header="Comment" IsReadOnly="False"
+										Width="SizeToCells" MinWidth="200"
+										Binding="{Binding Comment, Mode=TwoWay}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
 			<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
 			<TreeView Grid.Column="2" Name="PacketStructureTree" VirtualizingPanel.IsVirtualizing="True"/>
 		</Grid>
 	</DockPanel>

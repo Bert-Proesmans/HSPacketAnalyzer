@@ -45,7 +45,7 @@ namespace HSPacketAnalyzer
 			Log.Verbose("Switched CWD to {path}", Directory.GetCurrentDirectory());
 
 			// Open MainWindow
-			ShutdownMode = ShutdownMode.OnExplicitShutdown;
+			ShutdownMode = ShutdownMode.OnMainWindowClose; // DBG; Remove this later
 			MainWindow = new PacketInspectorWindow(packetsFilePath);
 			MainWindow.Show();
 		}
