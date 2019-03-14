@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HSPacketAnalyzer.Views"
+		xmlns:converters="clr-namespace:HSPacketAnalyzer.Views.Converters"
         xmlns:viewmodels="clr-namespace:HSPacketAnalyzer.ViewModels"
         mc:Ignorable="d">
     <Window.Resources>
         <viewmodels:PacketInspectorViewModel x:Key="ViewModel"/>
-    </Window.Resources>
+		<converters:DebugConverter x:Key="DebugBinding"/>
+	</Window.Resources>
 
     <Window.Title>
         <Binding Source="{StaticResource ViewModel}" Path="Title"/>
@@ -22,7 +24,37 @@
 
     <!-- NOTE; Wrap the main content into a panel that's the last child of
     the dockpanel. The last child will fill the parent window. -->
-    <DockPanel>
+    <DockPanel LastChildFill="True">
+		<Menu DockPanel.Dock="Top">
+			<Menu.ItemsPanel>
+				<ItemsPanelTemplate>
+					<DockPanel HorizontalAlignment="Stretch"/>
+				</ItemsPanelTemplate>
+			</Menu.ItemsPanel>
+			<MenuItem Header="In progress"/>
+		</Menu>
 
-    </DockPanel>
+		<StatusBar DockPanel.Dock="Bottom">
+			<StatusBar.ItemsPanel>
+				<ItemsPanelTemplate>
+					<DockPanel HorizontalAlignment="Stretch"/>
+				</ItemsPanelTemplate>
+			</StatusBar.ItemsPanel>
+			<StatusBarItem>
+				<TextBlock Text="In Progress"/>
+			</StatusBarItem>
+		</StatusBar>
+		
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="800"/>
+				<!-- Splitter -->
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<DataGrid Grid.Column="0" Name="PacketListGrid"/>
+			<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+			<TreeView Grid.Column="2" Name="PacketStructureTree" VirtualizingPanel.IsVirtualizing="True"/>
+		</Grid>
+	</DockPanel>
 </Window>

@@ -80,6 +80,7 @@
       <DependentUpon>Toggles.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PacketInspectorViewModel.cs" />
+    <Compile Include="Views\Converters\DebugConverter.cs" />
     <Compile Include="Views\PacketInspectorWindow.xaml.cs">
       <DependentUpon>PacketInspectorWindow.xaml</DependentUpon>
     </Compile>
