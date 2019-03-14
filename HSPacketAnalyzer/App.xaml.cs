@@ -2,26 +2,27 @@
 using Serilog;
 using Serilog.Core;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 
 namespace HSPacketAnalyzer
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class HSPacketAnalyzerApp : Application
-    {
-        private readonly Logger _logger;
+	/// <summary>
+	/// Interaction logic for App.xaml
+	/// </summary>
+	public partial class HSPacketAnalyzerApp : Application
+	{
+		private readonly Logger _logger;
 
-        public HSPacketAnalyzerApp()
-        {
-            _logger = Helpers.Logging.SetDefault();
-        }
+		public HSPacketAnalyzerApp()
+		{
+			_logger = Helpers.Logging.SetDefault();
+		}
 
-        #region EVENT_HANDLERS
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
+		#region EVENT_HANDLERS
+		private void Application_Startup(object sender, StartupEventArgs e)
+		{
 #if !DEBUG
             if (HSPacketAnalyzer.Properties.Toggles.Default.ShowConsole)
             {
@@ -33,31 +34,32 @@ namespace HSPacketAnalyzer
             }
 #endif
 
-            Log.Information("Program startup at {time}", DateTime.Now);
+			Log.Information("Program startup at {time}", DateTime.Now);
 
-            // Handle arguments
-            var _ = e.Args;
-            string packetsFilePath = null;
+			// Handle arguments
+			string[] _ = e.Args;
+			string packetsFilePath = null;
 
-            // Initialize dependencies
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            Log.Verbose("Switched CWD to {path}", Directory.GetCurrentDirectory());
+			// Initialize dependencies
+			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+			Log.Verbose("Switched CWD to {path}", Directory.GetCurrentDirectory());
 
-            // Open MainWindow
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            MainWindow = new PacketInspectorWindow(packetsFilePath);
-            MainWindow.Show();
-        }
+			// Open MainWindow
+			ShutdownMode = ShutdownMode.OnExplicitShutdown;
+			MainWindow = new PacketInspectorWindow(packetsFilePath);
+			MainWindow.Show();
+		}
 
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-        }
+		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			Debugger.Break();
+		}
 
-        private void Application_Exit(object sender, ExitEventArgs e)
-        {
-            _logger?.Dispose();
-        }
+		private void Application_Exit(object sender, ExitEventArgs e)
+		{
+			_logger?.Dispose();
+		}
 
-#endregion
-    }
+		#endregion
+	}
 }
