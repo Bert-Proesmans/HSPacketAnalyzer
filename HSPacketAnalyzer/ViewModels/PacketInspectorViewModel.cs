@@ -66,10 +66,12 @@ namespace HSPacketAnalyzer.ViewModels
 			};
 
 			_packetItems.Clear();
-			foreach (PacketOverviewViewModel item in samplePackets)
-			{
-				_packetItems.Add(item);
-			}
+			_packetItems.AddRange(samplePackets);
+
+			//foreach (PacketOverviewViewModel item in samplePackets)
+			//{
+			//	_packetItems.Add(item);
+			//}
 		}
 
 		protected void AddPacket() { }
