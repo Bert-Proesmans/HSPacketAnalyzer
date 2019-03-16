@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6242e207-0762-4a8b-9ffc-c2b96115ce2e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Foundation</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ExtendedObservableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ICollectionView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ObservableCollectionView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ReadOnlyObservableCollectionView.cs" />
+  </ItemGroup>
+</Project>

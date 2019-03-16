@@ -128,5 +128,6 @@
     </Page>
   </ItemGroup>
   <Import Project="..\PacketModels\PacketModels.projitems" Label="Shared" />
+  <Import Project="..\Foundation\Foundation.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

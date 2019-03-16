@@ -1,4 +1,7 @@
-﻿using HSPacketAnalyzer.Views;
+﻿using HSPacketAnalyzer.Controllers;
+using HSPacketAnalyzer.Services;
+using HSPacketAnalyzer.Views;
+using MyToolkit.Composition;
 using Serilog;
 using Serilog.Core;
 using System;
@@ -43,6 +46,9 @@ namespace HSPacketAnalyzer
 			// Initialize dependencies
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			Log.Verbose("Switched CWD to {path}", Directory.GetCurrentDirectory());
+
+			var contextFactory = new AppContextRepository(this);
+			ServiceLocator.Default.RegisterSingleton<IContextRepository, AppContextRepository>(contextFactory);
 
 			// Open MainWindow
 			ShutdownMode = ShutdownMode.OnMainWindowClose; // DBG; Remove this later

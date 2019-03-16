@@ -49,11 +49,12 @@
 			</Grid.ColumnDefinitions>
 
 			<DataGrid Grid.Column="0" Name="PacketListGrid"
-					  ItemsSource="{Binding Path=PacketItems}"
+					  ItemsSource="{Binding Path=PacketView}"
 					  AutoGenerateColumns="False" CanUserSortColumns="True"
 					  SelectionMode="Extended" SelectionUnit="FullRow"
 					  CanUserReorderColumns="True" CanUserResizeColumns="True"
-					  CanUserAddRows="False" CanUserDeleteRows="False">
+					  CanUserAddRows="False" CanUserDeleteRows="False"
+					  IsReadOnly="True">
 				<DataGrid.ItemContainerStyle>
 					<Style TargetType="{x:Type DataGridRow}">
 						<Style.Triggers>

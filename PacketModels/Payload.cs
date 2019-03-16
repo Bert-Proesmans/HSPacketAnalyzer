@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using MyToolkit.Collections;
+using Foundation.Collections;
 using PacketModels.Packets;
 
 namespace PacketModels
@@ -14,12 +14,12 @@ namespace PacketModels
 		public uint BodyTypeHash { get; }
 		public byte[] Body { get; }
 
-		private readonly MtObservableCollection<PacketBase> _payloadPackets;
+		private readonly ExtendedObservableCollection<PacketBase> _payloadPackets;
 		public IReadOnlyCollection<PacketBase> PayloadPackets => _payloadPackets;
 
 		public Payload(PayloadDirection direction, PayloadStream streamKind, DateTime transmissionDate, uint bodyTypeHash, byte[] body)
 		{
-			_payloadPackets = new MtObservableCollection<PacketBase>();
+			_payloadPackets = new ExtendedObservableCollection<PacketBase>();
 
 			Direction = direction;
 			StreamKind = streamKind;

@@ -7,34 +7,39 @@ using Serilog;
 
 namespace HSPacketAnalyzer.Controllers
 {
-	internal class WindowContextRepository : IContextRepository
+	internal class AppContextRepository : IContextRepository
 	{
+		#region Private Fields
+
 		private readonly Application _application;
 
 		private readonly List<IContext> _contexts;
 
 		private readonly BehaviorSubject<bool> _contextUpdateTrigger;
 
-		public WindowContextRepository() : this(Application.Current) { }
+		#endregion
 
-		public WindowContextRepository(Application app)
+		#region Public Constructors
+		public AppContextRepository() : this(Application.Current) { }
+
+		public AppContextRepository(Application app)
 		{
 			_application = app;
 			_contexts = new List<IContext>();
 			_contextUpdateTrigger = new BehaviorSubject<bool>(false);
 		}
 
+		#endregion
+
+		#region Public Properties
+
 		public IObservable<bool> WhenUpdated => _contextUpdateTrigger;
 
 		public IReadOnlyList<IContext> Contexts => _contexts;
 
-		private void StoreContext(IContext ctxt)
-		{
-			_contexts.Add(ctxt);
-			Log.Debug("{amount} of contexts stored", _contexts.Count);
+		#endregion
 
-			_contextUpdateTrigger.OnNext(true);
-		}
+		#region Public Methods
 
 		public IContext NewContext()
 		{
@@ -66,5 +71,19 @@ namespace HSPacketAnalyzer.Controllers
 
 			Log.Information("Removed {context} from the repository", ctxt);
 		}
+
+		#endregion
+
+		#region Private Methods
+
+		private void StoreContext(IContext ctxt)
+		{
+			_contexts.Add(ctxt);
+			Log.Debug("{amount} of contexts stored", _contexts.Count);
+
+			_contextUpdateTrigger.OnNext(true);
+		}
+
+		#endregion
 	}
 }

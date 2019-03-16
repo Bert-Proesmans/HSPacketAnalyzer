@@ -1,17 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using PacketModels.Packets;
 
 namespace HSPacketAnalyzer.Services
 {
 	internal interface IContext
 	{
-		string Name { get; }
+		string Name { get; set; }
 
 		string SupportedVersion { get; }
 
 		string CurrentVersion { get; }
 
-		int PacketCount { get; }
+		int PayloadCount { get; }
 
-		IReadOnlyCollection<bool> Packets { get; } // TODO;
+		ObservableCollection<PacketBase> Packets { get; }
+
+		Task Initialise(string filePath);
 	}
 }

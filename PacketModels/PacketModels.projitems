@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Packets\BNET\BNetPacket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Packets\Packet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Packets\PacketBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Packets\UnrecognizedPacket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Payload.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PayloadDirection.cs" />

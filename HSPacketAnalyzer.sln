@@ -12,8 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PacketModels", "PacketModels\PacketModels.shproj", "{DD56D750-4E1C-4127-B304-46433A9E1708}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Foundation", "Foundation\Foundation.shproj", "{6242E207-0762-4A8B-9FFC-C2B96115CE2E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Foundation\Foundation.projitems*{6242e207-0762-4a8b-9ffc-c2b96115ce2e}*SharedItemsImports = 13
+		Foundation\Foundation.projitems*{c1356249-51e5-4e1d-9080-2ab721401730}*SharedItemsImports = 4
 		PacketModels\PacketModels.projitems*{c1356249-51e5-4e1d-9080-2ab721401730}*SharedItemsImports = 4
 		PacketModels\PacketModels.projitems*{dd56d750-4e1c-4127-b304-46433a9e1708}*SharedItemsImports = 13
 	EndGlobalSection
