@@ -18,6 +18,7 @@ namespace HSPacketAnalyzer.ViewModels
 		#region Private FIELDS
 
 		private readonly ExtendedObservableCollection<PacketOverviewViewModel> _packetItems;
+		private readonly IContextRepository _ctxtRepository;
 		private readonly IContext _context;
 
 		#endregion
@@ -27,9 +28,10 @@ namespace HSPacketAnalyzer.ViewModels
 
 		public PacketInspectorViewModel() : this(ServiceLocator.Default.Resolve<IContextRepository>()) { }
 
-		public PacketInspectorViewModel(IContextRepository ctxtFactory)
+		public PacketInspectorViewModel(IContextRepository ctxtRepository)
 		{
-			_context = ctxtFactory.NewContext();
+			_ctxtRepository = ctxtRepository;
+			_context = ctxtRepository.NewContext();
 
 			_packetItems = new ExtendedObservableCollection<PacketOverviewViewModel>();
 			PacketView = new ReadOnlyObservableCollectionView<PacketOverviewViewModel, int>(_packetItems, true);
@@ -52,23 +54,48 @@ namespace HSPacketAnalyzer.ViewModels
 		public int Width => 1200;
 		public int Height => 650;
 
-        public ReadOnlyObservableCollectionView<PacketOverviewViewModel, int> PacketView { get; }
+		public ReadOnlyObservableCollectionView<PacketOverviewViewModel, int> PacketView { get; }
 
-        public ICommand DebugCommand { get; }
+		public ICommand DebugCommand { get; }
 
-        #endregion
-
-
-        #region Public Methods
-
-        public void Initialize(string loadFromPath /* CUSTOM DEPENDENCIES HERE */)
+		public string LibPath
 		{
-			_context.Initialise(loadFromPath);
+			get => _context.LibPath;
+			private set
+			{
+				if (_context.LibPath != value)
+				{
+					_context.LibPath = value;
+					RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+
+		#region Public Methods
+
+		public void Initialize(string loadFromPath /* CUSTOM DEPENDENCIES HERE */)
+		{
+			_context.Initialise(loadFromPath);			
 		}
 
 		public override void HandleException(Exception exception)
 		{
 			Log.Error(exception, "Unhandled exception during async task!");
+		}
+
+		public void UpdateLibPath(string libPath, bool setAsDefault)
+		{
+			LibPath = libPath;
+			if(setAsDefault)
+			{
+				Properties.User.Default.DefaultLibPath = libPath;
+				Properties.User.Default.Save();
+			}
+
+			RunTaskAsync(_context.RebuildAnalyzerAsync);
 		}
 
 		#endregion
@@ -77,10 +104,13 @@ namespace HSPacketAnalyzer.ViewModels
 
 		protected override void OnLoaded()
 		{
+			LibPath = Properties.User.Default.DefaultLibPath;
+			RunTaskAsync(_context.RebuildAnalyzerAsync);
 		}
 
 		protected override void OnUnloaded()
 		{
+			_ctxtRepository.RemoveContext(_context);
 		}
 
 		#endregion

@@ -55,6 +55,11 @@ namespace HSPacketAnalyzer.Controllers
 
 		public void RemoveContext(IContext ctxt)
 		{
+			if (ctxt == null)
+			{
+				throw new ArgumentNullException(nameof(ctxt));
+			}
+
 			bool isRemoved = _contexts.Remove(ctxt);
 			if (!isRemoved)
 			{
@@ -62,14 +67,16 @@ namespace HSPacketAnalyzer.Controllers
 				return;
 			}
 
+			string contextName = ctxt.Name;
+			Log.Information("Removed {context} from the repository", contextName);
+			ctxt.Dispose();
+
 			if (_contexts.Count == 0)
 			{
 				Log.Debug("{amount} contexts left", _contexts.Count);
 				Log.Information("Shutting down!");
 				_application.Shutdown(0);
 			}
-
-			Log.Information("Removed {context} from the repository", ctxt);
 		}
 
 		#endregion

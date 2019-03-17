@@ -96,14 +96,24 @@
       <DependentUpon>Toggles.settings</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AppContextRepository.cs" />
+    <Compile Include="Properties\User.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>User.settings</DependentUpon>
+    </Compile>
     <Compile Include="Services\IContext.cs" />
     <Compile Include="Services\IContextRepository.cs" />
+    <Compile Include="ViewModels\Dialogs\PickLibraryPathViewModel.cs" />
     <Compile Include="ViewModels\PacketInspectorViewModel.cs" />
     <Compile Include="ViewModels\PacketOverviewViewModel.cs" />
     <Compile Include="Views\Converters\DebugConverter.cs" />
+    <Compile Include="Views\Dialogs\PickLibraryPathDialog.xaml.cs">
+      <DependentUpon>PickLibraryPathDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PacketInspectorWindow.xaml.cs">
       <DependentUpon>PacketInspectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Validators\PathValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ConsoleManager.cs" />
@@ -116,12 +126,25 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Toggles.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Properties\User.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\TypeAnalyzer\TypeAnalyzer.csproj">
+      <Project>{f9018c36-3fac-4ff8-8803-53ab55fdd901}</Project>
+      <Name>TypeAnalyzer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Dialogs\PickLibraryPathDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PacketInspectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
