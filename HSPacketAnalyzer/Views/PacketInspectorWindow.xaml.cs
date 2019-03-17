@@ -8,7 +8,7 @@ namespace HSPacketAnalyzer.Views
 	/// </summary>
 	public partial class PacketInspectorWindow : Window
 	{
-		internal PacketInspectorViewModel ViewModel => (PacketInspectorViewModel)Resources["ViewModel"];
+		internal PacketInspectorViewModel ViewModel => (PacketInspectorViewModel)DataContext;
 
 		public PacketInspectorWindow(string loadFromPath)
 		{

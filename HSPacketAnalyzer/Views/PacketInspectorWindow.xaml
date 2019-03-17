@@ -8,23 +8,34 @@
         xmlns:viewmodels="clr-namespace:HSPacketAnalyzer.ViewModels"
         mc:Ignorable="d">
 	<Window.Resources>
-		<viewmodels:PacketInspectorViewModel x:Key="ViewModel"/>
 		<converters:DebugConverter x:Key="DebugBinding"/>
 	</Window.Resources>
+	
+	<Window.DataContext>
+		<viewmodels:PacketInspectorViewModel />
+	</Window.DataContext>
 
 	<Window.Title>
-		<Binding Source="{StaticResource ViewModel}" Path="Title"/>
+		<Binding Path="Title"/>
 	</Window.Title>
 	<Window.Width>
-		<Binding Source="{StaticResource ViewModel}" Path="Width" />
+		<Binding Path="Width" />
 	</Window.Width>
 	<Window.Height>
-		<Binding Source="{StaticResource ViewModel}" Path="Height" />
+		<Binding Path="Height" />
 	</Window.Height>
+
+	<Window.CommandBindings>
+		
+	</Window.CommandBindings>
+	
+	<Window.InputBindings>
+		<KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding DebugCommand}" />
+	</Window.InputBindings>
 
 	<!-- NOTE; Wrap the main content into a panel that's the last child of
     the dockpanel. The last child will fill the parent window. -->
-	<DockPanel LastChildFill="True" DataContext="{StaticResource ViewModel}">
+	<DockPanel LastChildFill="True">
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="In progress"/>
 		</Menu>

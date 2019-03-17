@@ -71,7 +71,7 @@ namespace HSPacketAnalyzer.Controllers
 		{
 			var samplePackets = new PacketBase[] {
 				new BNetPacket(null, false, new RPCHeader(-1, -1, -1), null),
-				new PegPacket(null, false, -1, null),
+				// new PegPacket(null, false, -1, null),
 			};
 
 			_packets.Clear();

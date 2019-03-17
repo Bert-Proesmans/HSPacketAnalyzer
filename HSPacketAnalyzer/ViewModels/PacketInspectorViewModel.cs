@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Input;
 using Foundation.Collections;
 using HSPacketAnalyzer.Helpers;
 using HSPacketAnalyzer.Services;
+using MyToolkit.Command;
 using MyToolkit.Composition;
 using PacketModels.Packets;
 using Serilog;
@@ -17,6 +19,7 @@ namespace HSPacketAnalyzer.ViewModels
 
 		private readonly ExtendedObservableCollection<PacketOverviewViewModel> _packetItems;
 		private readonly IContext _context;
+
 		#endregion
 
 
@@ -32,6 +35,13 @@ namespace HSPacketAnalyzer.ViewModels
 			PacketView = new ReadOnlyObservableCollectionView<PacketOverviewViewModel, int>(_packetItems, true);
 
 			_context.Packets.CollectionChanged += Packets_CollectionChanged;
+
+			DebugCommand = new RelayCommand(InsertPacket);
+		}
+
+		private void InsertPacket()
+		{
+			_packetItems.Add(TransformPacketModel(null));
 		}
 
 		#endregion
@@ -44,6 +54,8 @@ namespace HSPacketAnalyzer.ViewModels
 
         public ReadOnlyObservableCollectionView<PacketOverviewViewModel, int> PacketView { get; }
 
+        public ICommand DebugCommand { get; }
+
         #endregion
 
 
@@ -51,9 +63,7 @@ namespace HSPacketAnalyzer.ViewModels
 
         public void Initialize(string loadFromPath /* CUSTOM DEPENDENCIES HERE */)
 		{
-			base.Initialize();
-
-			RunTaskAsync(_context.Initialise(loadFromPath));
+			_context.Initialise(loadFromPath);
 		}
 
 		public override void HandleException(Exception exception)
@@ -67,12 +77,10 @@ namespace HSPacketAnalyzer.ViewModels
 
 		protected override void OnLoaded()
 		{
-			base.OnLoaded();
 		}
 
 		protected override void OnUnloaded()
 		{
-			base.OnUnloaded();
 		}
 
 		#endregion
