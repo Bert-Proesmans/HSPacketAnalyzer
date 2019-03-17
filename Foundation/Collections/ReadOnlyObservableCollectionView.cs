@@ -20,6 +20,14 @@ namespace Foundation.Collections
 		protected ObservableCollection<T> _itemCollection;
 		protected List<T> _filteredCollection;
 
+		#endregion
+
+		#region Private Fields
+		// nameof() trick doesn't work for object indexing properties!
+		// We need a correct value to raise a change event on so UI controls can update
+		// their internal list.
+		private const string WPFIndexerName = "Item[]";
+
 		private bool _isTracking;
 		private int? _limit;
 		private int? _offset;
@@ -71,10 +79,6 @@ namespace Foundation.Collections
 
 		#endregion
 
-		#region Protected Events
-
-		#endregion
-
 		#region Public Properties
 
 		public IReadOnlyList<T> Items => _filteredCollection;
@@ -94,6 +98,7 @@ namespace Foundation.Collections
 
 		public bool IsSynchronized => true;
 
+		[IndexerName("Item")]
 		public T this[int index]
 		{
 			get
@@ -249,7 +254,13 @@ namespace Foundation.Collections
 
 			if (_order != null)
 			{
-				source = source.OrderBy(_order);
+				if (_ascending)
+				{
+					source = source.OrderBy(_order);
+				} else
+				{
+					source = source.OrderByDescending(_order);
+				}
 			}
 
 			if (_offset != null)
@@ -268,9 +279,9 @@ namespace Foundation.Collections
 			_filteredCollection.InsertRange(0, filtered);
 
 			RaisePropertyChanged(nameof(Count));
-			RaisePropertyChanged(nameof(Items));
+			RaisePropertyChanged(WPFIndexerName);
 			OnCollectionReset();
-			OnCollectionRangeAdded(filtered, 0);
+			OnCollectionRangeAdded(0, filtered);
 		}
 
 		#endregion
@@ -292,9 +303,9 @@ namespace Foundation.Collections
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
 
-		private void OnCollectionRangeAdded(IList<T> newItems, int startingIndex)
+		private void OnCollectionRangeAdded(int startingIndex, IList<T> newItems)
 		{
-			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newItems, startingIndex));
+			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, (IList)newItems, startingIndex));
 		}
 
 		private void OnItemCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -306,7 +317,7 @@ namespace Foundation.Collections
 		private void OnItemCollectionPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			// NOP?
-			Refresh();
+			// Refresh();
 		}
 
 		#endregion

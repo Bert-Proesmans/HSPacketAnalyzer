@@ -32,12 +32,6 @@ namespace Foundation.Collections
 
 		#endregion
 
-		#region Public Properties
-
-		public string IndexerName { get; set; } = WPFIndexerName;
-
-		#endregion
-
 		#region Public Methods
 
 		public void AddRange(IEnumerable<T> collection) => InsertRange(Items.Count, collection);
@@ -69,7 +63,7 @@ namespace Foundation.Collections
 			}
 
 			OnPropertyChanged(nameof(Count));
-			OnPropertyChanged(IndexerName);
+			OnPropertyChanged(WPFIndexerName);
 			OnCollectionRangeAdded(insertionIndex, MakeList(collection));
 		}
 
@@ -100,7 +94,7 @@ namespace Foundation.Collections
 			if (dirty)
 			{
 				OnPropertyChanged(nameof(Count));
-				OnPropertyChanged(IndexerName);
+				OnPropertyChanged(WPFIndexerName);
 				OnCollectionRangeRemoved(-1, MakeList(collection));
 			}
 		}
@@ -146,7 +140,7 @@ namespace Foundation.Collections
 			}
 
 			OnPropertyChanged(nameof(Count));
-			OnPropertyChanged(IndexerName);
+			OnPropertyChanged(WPFIndexerName);
 			OnCollectionRangeRemoved(removalIndex, oldItems);
 		}
 
@@ -218,7 +212,7 @@ namespace Foundation.Collections
 				}
 			}
 
-			OnPropertyChanged(IndexerName);
+			OnPropertyChanged(WPFIndexerName);
 			OnCollectionMoved(newStartingIndex, oldStartingIndex, oldItems);
 		}
 
@@ -268,7 +262,7 @@ namespace Foundation.Collections
 				}
 			}
 
-			OnPropertyChanged(IndexerName);
+			OnPropertyChanged(WPFIndexerName);
 			OnCollectionReplaced(startingIndex, newItems, replaced);
 		}
 
@@ -297,7 +291,7 @@ namespace Foundation.Collections
 			}
 
 			OnPropertyChanged(nameof(Count));
-			OnPropertyChanged(IndexerName);
+			OnPropertyChanged(WPFIndexerName);
 			OncollectionReInitialized(preItemCopy, MakeList(collection));
 		}
 
